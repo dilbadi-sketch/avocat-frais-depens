@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Clients - Calculateur de Frais et Dépens{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-users"></i> Clients</h1>
+            <a href="{{ url_for('client_nouveau') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nouveau Client
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if clients.items %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Type</th>
+                            <th>Ville</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for client in clients.items %}
+                        <tr>
+                            <td>
+                                <strong>{{ client.nom_complet() }}</strong>
+                            </td>
+                            <td>{{ client.email }}</td>
+                            <td>{{ client.telephone or 'N/A' }}</td>
+                            <td>
+                                {% if client.type_client == 'particulier' %}
+                                    <span class="badge bg-info">Particulier</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Entreprise</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ client.ville or 'N/A' }}</td>
+                            <td>
+                                <a href="{{ url_for('client_detail', id=client.id) }}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ url_for('client_editer', id=client.id) }}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+{% if clients.pages > 1 %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-4">
+        {% if clients.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('clients_list', page=1) }}">Première</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('clients_list', page=clients.prev_num) }}">Précédente</a>
+            </li>
+        {% endif %}
+        
+        {% for page_num in clients.iter_pages() %}
+            {% if page_num %}
+                {% if page_num == clients.page %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ page_num }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('clients_list', page=page_num) }}">{{ page_num }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        
+        {% if clients.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('clients_list', page=clients.next_num) }}">Suivante</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('clients_list', page=clients.pages) }}">Dernière</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-info-circle"></i> Aucun client trouvé.
+            <a href="{{ url_for('client_nouveau') }}">Créer le premier client</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

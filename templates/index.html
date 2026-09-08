@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Calculateur de Frais et Dépens{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">
+            <i class="fas fa-home"></i> Tableau de Bord
+        </h1>
+    </div>
+</div>
+
+<!-- Statistiques -->
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card" style="border-left: 5px solid #3498db;">
+            <div class="card-body text-center">
+                <i class="fas fa-users" style="font-size: 2.5rem; color: #3498db;"></i>
+                <h6 class="card-title mt-3">Clients</h6>
+                <p class="card-text" style="font-size: 1.8rem; font-weight: bold; color: #3498db;">
+                    {{ clients }}
+                </p>
+                <a href="{{ url_for('clients_list') }}" class="btn btn-sm btn-primary">Voir</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card" style="border-left: 5px solid #27ae60;">
+            <div class="card-body text-center">
+                <i class="fas fa-folder" style="font-size: 2.5rem; color: #27ae60;"></i>
+                <h6 class="card-title mt-3">Dossiers</h6>
+                <p class="card-text" style="font-size: 1.8rem; font-weight: bold; color: #27ae60;">
+                    {{ dossiers }}
+                </p>
+                <a href="{{ url_for('dossiers_list') }}" class="btn btn-sm btn-success">Voir</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card" style="border-left: 5px solid #e74c3c;">
+            <div class="card-body text-center">
+                <i class="fas fa-receipt" style="font-size: 2.5rem; color: #e74c3c;"></i>
+                <h6 class="card-title mt-3">Factures</h6>
+                <p class="card-text" style="font-size: 1.8rem; font-weight: bold; color: #e74c3c;">
+                    {{ factures }}
+                </p>
+                <a href="{{ url_for('factures_list') }}" class="btn btn-sm btn-danger">Voir</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actions rapides -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-lightning-bolt"></i> Actions Rapides
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <a href="{{ url_for('client_nouveau') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-user-plus"></i> Nouveau Client
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <a href="{{ url_for('dossier_nouveau') }}" class="btn btn-success w-100">
+                            <i class="fas fa-folder-plus"></i> Nouveau Dossier
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <a href="{{ url_for('factures_list') }}" class="btn btn-info w-100">
+                            <i class="fas fa-file-invoice"></i> Voir Factures
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Informations -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+            <h5 class="alert-heading">
+                <i class="fas fa-info-circle"></i> Bienvenue!
+            </h5>
+            <p>Vous êtes connecté au système de gestion des frais et dépens pour avocats.</p>
+            <p>Utilisez le menu de navigation pour accéder à vos clients, dossiers et factures.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
